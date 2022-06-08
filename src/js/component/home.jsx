@@ -6,6 +6,7 @@ const Home = () => {
 	const [taskList, setTaskList] = useState([]);
 
 	// Usuario iNelan creado
+	// Informacion GET obtenida
 	useEffect(() => {
 		fetch("https://assets.breatheco.de/apis/fake/todos/user/iNelan", {
 			method: "PUT",
