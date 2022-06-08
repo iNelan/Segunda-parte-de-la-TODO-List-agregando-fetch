@@ -1,42 +1,55 @@
-import React, { useState } from "react";
-import ImputTask from "./Imput.jsx";
-import Task from "./taskdelete.jsx";
+import React, { useState, useEffect } from "react";
 
 //create your first component
 const Home = () => {
+	const [task, setTask] = useState({ label: null, done: false });
 	const [taskList, setTaskList] = useState([]);
 
-	const newTask = (task) => {
-		setTaskList([task, ...taskList]);
-	};
-
-	const toDelete = (id) => {
-		const filterList = taskList.filter((e, index) => index !== id);
-		setTaskList(filterList);
-	};
-
+	// Usuario iNelan creado
 	useEffect(() => {
 		fetch("https://assets.breatheco.de/apis/fake/todos/user/iNelan", {
-			method: "POST", // or 'PUT'
-			body: JSON.stringify([]), // data can be string or {object}!
-			headers: {
-				"Content-Type": "application/json",
-			},
+			method: "PUT",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify(taskList),
 		})
-			.then((res) => res.json())
-			.catch((error) => console.error("Error:", error))
-			.then((response) => console.log("Success:", response));
-	}, []);
+			.then((response) => response.json())
+			.then((data) => console.log(data));
+	}, [taskList]);
+
+	const deleteTask = (index) => {
+		let filter = taskList.filter((value, i) => index !== i);
+		setTaskList(filter);
+	};
 
 	return (
-		<div>
-			<ImputTask newTask={newTask} />
-
-			<div className="list">
-				{taskList.map((e, index) => (
-					<Task task={e} toDelete={toDelete} id={index} />
-				))}
-			</div>
+		<div className=" m-auto justify-content-center text-center">
+			<input
+				onChange={(e) =>
+					setTask({ label: e.target.value, done: false })
+				}
+				type="text"
+			/>
+			<button
+				onClick={() => {
+					setTaskList([...taskList, task]);
+				}}>
+				ADD
+			</button>
+			<ul className="d-block m-auto justify-content-center text-center">
+				{taskList.map((task, index) => {
+					return (
+						<li key={index}>
+							{task.label}
+							<span
+								onClick={() => {
+									deleteTask(index);
+								}}>
+								Delete
+							</span>
+						</li>
+					);
+				})}
+			</ul>
 		</div>
 	);
 };
