@@ -23,7 +23,7 @@ const Home = () => {
 	};
 
 	return (
-		<div className=" m-auto justify-content-center text-center">
+		<div className=" m-auto justify-content-center text-center body">
 			<input
 				onChange={(e) =>
 					setTask({ label: e.target.value, done: false })
@@ -36,7 +36,7 @@ const Home = () => {
 				}}>
 				ADD
 			</button>
-			<ul className="d-block m-auto justify-content-center text-center">
+			<ul className="d-block m-auto justify-content-center text-center list">
 				{taskList.map((task, index) => {
 					return (
 						<li key={index}>
@@ -45,7 +45,8 @@ const Home = () => {
 								onClick={() => {
 									deleteTask(index);
 								}}>
-								Delete
+								{" "}
+								<button className="delete">Delete</button>
 							</span>
 						</li>
 					);
