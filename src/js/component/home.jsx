@@ -6,7 +6,7 @@ const Home = () => {
 	const [taskList, setTaskList] = useState([]);
 
 	// Usuario iNelan creado
-	// Informacion GET obtenida
+
 	useEffect(() => {
 		fetch("https://assets.breatheco.de/apis/fake/todos/user/iNelan", {
 			method: "PUT",
@@ -16,6 +16,16 @@ const Home = () => {
 			.then((response) => response.json())
 			.then((data) => console.log(data));
 	}, [taskList]);
+
+	// Informacion GET obtenida
+
+	useEffect(() => {
+		{
+			fetch("https://assets.breatheco.de/apis/fake/todos/user/iNelan")
+				.then((response) => response.json())
+				.then((data) => setTaskList(data));
+		}
+	}, []);
 
 	const deleteTask = (index) => {
 		let filter = taskList.filter((value, i) => index !== i);
